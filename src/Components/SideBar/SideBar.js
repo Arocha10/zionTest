@@ -44,11 +44,18 @@ class Sidebar extends Component {
         if(profile.errors){
           Alert.alert("Error", profile.errors[0]);
 
-        }else{
+        }else if(profile){
           console.log("profinle", profile);
           let images = profile;
           this.props.update({users: users, actualUser:search, images: images}),
           this.setState({ search:"" });
+          if(profile.length==0){
+            Alert.alert("Warning", "This user has no publiations ");
+          }
+        }else{
+          Alert.alert("Unexpected error");
+          this.setState({ search:"" });
+
         }
       })
     .catch(err => {
@@ -70,10 +77,16 @@ class Sidebar extends Component {
         console.log("profinle", profile);
         if(profile.errors){
           Alert.alert("Error", profile.errors[0]);
-        }else{
+        }else if(profile){
         let images = profile;
         users.push(this.state.search);
         this.props.update({users: users, actualUser:search, images: images}),
+        this.setState({ search:"" });
+        if(profile.length==0){
+          Alert.alert("Warning", "This user has no publiations ");
+        }
+      }else{
+        Alert.alert("Unexpected error");
         this.setState({ search:"" });
       }
       })
