@@ -28,7 +28,7 @@ export default StyleSheet.create({
     position: "absolute"
   },
   logo_container: {
-    height: 200,
+    height: 100,
     width: "100%",
     alignContent: "center",
     alignSelf: "stretch",

@@ -13,10 +13,22 @@ import {
   Container
 } from "native-base";
 import { sideBarItems } from "../../Utils/Constants";
+import { SearchBar } from 'react-native-elements';
+
 import styles from "./styles";
 
 class Sidebar extends Component {
+  state = {
+    search: '',
+  };
+
+  updateSearch = search => {
+    this.setState({ search });
+  };
+  
   render() {
+    const { search } = this.state;
+
     return (
       <Container>
         <Content>
@@ -24,7 +36,11 @@ class Sidebar extends Component {
             <Image style={styles.background} />
             <Image style={styles.logo_image} />
           </View>
-
+          <SearchBar
+              placeholder="Type Here..."
+              onChangeText={this.updateSearch}
+              value={search}
+            />
           <List
             dataArray={sideBarItems}
             renderRow={item => {
