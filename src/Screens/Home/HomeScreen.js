@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import Unsplash from 'unsplash-js/native';
 import { connect } from "react-redux";
-
-import { Platform, StyleSheet, Text, View, FlatList, Image, TouchableOpacity } from "react-native";
+import { Platform, StyleSheet, Text, View, Alert, Image, TouchableOpacity } from "react-native";
 import PhotoGrid from 'react-native-image-grid';
 
 const instructions = Platform.select({
@@ -26,37 +25,37 @@ class App extends Component {
   }
 
   componentWillMount() {
-    unsplash.users.photos("corneschi", 1, 10, "popular", false)
-    .then(json => {
-      let profile = JSON.parse(json._bodyInit);
-      console.log(profile)
+    console.log("USER", this.props.user)
+      console.log("hay usuario");
+      unsplash.users.photos("corneschi", 1, 20, "popular")
+      .then(json => {
+        let profile = JSON.parse(json._bodyInit);
+        console.log("profinle", profile);
         this.setState({
           images: profile,
         });
-      // Your code
-    })
-  .catch(err => {
-    console.log("ERROR", err)
-    // Your flawless error handling code
-  });
-  let items = Array.apply(null, Array(60)).map((v, i) => {
-    //Using demo placeholder images but you can add your images here
-    return { id: i, links : {download: 'http://placehold.it/200x200?text=' + (i +1)} };
-  });
-  this.setState({ images_test: items });
+      })
+    .catch(err => {
+      console.log("ERROR", err)
+      Alert.alert("The user not exist or doesnt have any photo");
+    });
 
-  }
-
+      let items = Array.apply(null, Array(60)).map((v, i) => {
+        //Using demo placeholder images but you can add your images here
+        return { id: i, urls : {small: 'http://placehold.it/200x200?text=' + (i +1)} };
+      });
+      this.setState({ images_test: items });
+}
   renderHeader() {
     //Header of the Screen
     return <Text style={{padding:16, fontSize:20, color:'white', backgroundColor:'green'}}>
-               Image Gallery
+               { "Free galery"}
            </Text>;
   }
 
   renderItem(item, itemSize, itemPaddingHorizontal) {
     //Single item of Grid
-    console.log("ITEM", item,item.links.download, itemSize );
+    console.log("ITEM", item);
     return (
       <TouchableOpacity
         key={item.id}
@@ -71,7 +70,7 @@ class App extends Component {
           resizeMode="cover"
           resizeMethod="resize"
           style={{ flex: 1 }}
-          source={{ uri: item.links.download }}
+          source={{ uri: item.urls.small }}
         />
       </TouchableOpacity>
     );
@@ -81,11 +80,8 @@ class App extends Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-        <View style={styles.containerStyle}>
-      <PhotoGrid
+
+        <PhotoGrid
           data={this.state.images? this.state.images :  this.state.images_test}
           itemsPerRow={3}
           //You can decide the item per row
@@ -94,7 +90,6 @@ class App extends Component {
           renderHeader={this.renderHeader}
           renderItem={this.renderItem.bind(this)}
         /> 
-        </View>
       </View>
     );
   }
@@ -120,7 +115,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F5FCFF"
+    backgroundColor: "#F5FCFF",
+    paddingTop: "10%"
   },
   welcome: {
     fontSize: 20,

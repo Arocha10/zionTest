@@ -6,12 +6,13 @@ import {
   List,
   ListItem,
   Text,
-  Icon,
   Left,
   Body,
   Button,
   Container
 } from "native-base";
+import { Icon } from 'react-native-elements'
+
 import { sideBarItems } from "../../Utils/Constants";
 import { update } from "../../Ducks/UsersReducer/UsersReducer";
 import { SearchBar } from 'react-native-elements';
@@ -30,7 +31,7 @@ class Sidebar extends Component {
   addUser = search => {
     const {users } = this.props;
     users.push(this.state.search);
-    this.props.update({users: users}),
+    this.props.update({users: users, actualUser:search}),
     this.setState({ search:"" });
   };
   
@@ -55,13 +56,7 @@ class Sidebar extends Component {
             renderRow={item => {
               return (
                 <ListItem icon button onPress={() => this.props.update({actualUser: item})}>
-                  <Left>
-                    <Icon
-                      active
-                      type="MaterialCommunityIcons"
-                      name={"person"}
-                    />
-                  </Left>
+
                   <Body>
                     <Text>{item}</Text>
                   </Body>
@@ -84,7 +79,7 @@ class Sidebar extends Component {
 
 const mapStateToProps = state => ({
   users: state.Users.users,
-  user: state.Users.users.actualUser
+  user: state.Users.actualUser
 
 });
 

@@ -6,7 +6,7 @@ export const ACTIONS = {
 };
 
 // Action Creators
-export const update = payload => ({
+export const updateAuth = payload => ({
   type: ACTIONS.UPDATE,
   payload
 });

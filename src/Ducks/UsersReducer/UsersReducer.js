@@ -1,7 +1,7 @@
 // Action Types
 export const ACTIONS = {
-  CLEAR: "auth/CLEAR",
-  UPDATE: "auth/UPDATE"
+  CLEAR: "user/CLEAR",
+  UPDATE: "user/UPDATE"
 };
 
 // Action Creators

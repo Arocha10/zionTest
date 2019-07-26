@@ -18,18 +18,11 @@ const AppStack = createDrawerNavigator(
     contentComponent: props => <SideBar {...props} />
   }
 );
-const AuthStack = createStackNavigator(
-  { SignIn: SignInScreen },
-  {
-    headerMode: "none"
-  }
-);
 
 export default createSwitchNavigator(
   {
     //SplashScreen: SplashScreen,
     App: AppStack,
-    Auth: AuthStack
   },
   {
     // Splash screen should be the initial route
