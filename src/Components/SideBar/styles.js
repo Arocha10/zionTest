@@ -11,6 +11,9 @@ export default StyleSheet.create({
     justifyContent: "center",
     margin: 20
   },
+  versionText:{
+    color:"#423f3f"
+  },
   logout_button: { alignSelf: "center", margin: 20 },
   logo_image: {
     height: 150,

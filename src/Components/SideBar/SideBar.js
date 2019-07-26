@@ -15,13 +15,13 @@ import { Icon } from 'react-native-elements'
 
 import { update } from "../../Ducks/UsersReducer/UsersReducer";
 import { SearchBar } from 'react-native-elements';
-
+import { unsplashSecret, unsplashKey } from "../../Utils/Constants";
 import styles from "./styles";
 import Unsplash from 'unsplash-js/native';
 
 const unsplash = new Unsplash({
-  applicationId: "aa2f3c3be8125f1fc86e3007153420c4e446c19b7b0c6d80a6257b281c9a0dc5",
-  secret: "a5ab4ed2efdc772dca8d5636a26c0d897907df38cd92baa9067e57093d9596b5"
+  applicationId: unsplashKey,
+  secret: unsplashSecret
 });
 
 class Sidebar extends Component {
@@ -38,7 +38,7 @@ class Sidebar extends Component {
     console.log(search)
     if(search){
 
-      unsplash.users.photos(search, 1, 20, "popular")
+      unsplash.users.photos(search, 1, 30, "popular")
       .then(json => {
         let profile = JSON.parse(json._bodyInit);
         if(profile.errors){
@@ -64,7 +64,7 @@ class Sidebar extends Component {
     console.log(search)
     if(search){
 
-      unsplash.users.photos(search, 1, 20, "popular")
+      unsplash.users.photos(search, 1, 30, "popular")
       .then(json => {
         let profile = JSON.parse(json._bodyInit);
         console.log("profinle", profile);
@@ -105,7 +105,7 @@ class Sidebar extends Component {
             dataArray={users}
             renderRow={item => {
               return (
-                <ListItem icon button onPress={() => this.addUser(search)}>
+                <ListItem icon button onPress={() => this.updateUser(search)}>
 
                   <Body>
                     <Text>{item}</Text>
@@ -120,8 +120,8 @@ class Sidebar extends Component {
           }
         </Content>
         <View style={styles.version_box}>
-          <Text>Made by Andres Rocha </Text>
-          <Text>github: Arocha10 </Text>
+          <Text style={styles.versionText}>Made by Andres Rocha </Text>
+          <Text style={styles.versionText}>github: Arocha10 </Text>
         </View>
       </Container>
     );
