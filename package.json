@@ -1,0 +1,41 @@
+{
+  "name": "TheListApp",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "adb:d": "adb devices",
+    "adb:r": "adb kill-server && adb start-server && adb devices",
+    "android:run": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && react-native run-android",
+    "android:shake": "adb shell input keyevent 82",
+    "test": "jest"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bluebird": "^3.5.3",
+    "lodash": "^4.17.11",
+    "moment": "^2.22.2",
+    "native-base": "^2.8.1",
+    "react": "16.6.1",
+    "react-native": "0.57.6",
+    "react-native-gesture-handler": "^1.0.10",
+    "react-native-size-matters": "^0.1.4",
+    "react-navigation": "^3.0.4",
+    "react-navigation-redux-helpers": "^2.0.8",
+    "react-redux": "^5.1.1",
+    "redux": "^4.0.1",
+    "redux-persist": "^5.10.0",
+    "redux-thunk": "^2.3.0",
+    "remote-redux-devtools": "^0.5.13",
+    "validate.js": "^0.12.0"
+  },
+  "devDependencies": {
+    "babel-jest": "23.6.0",
+    "jest": "23.6.0",
+    "metro-react-native-babel-preset": "0.49.2",
+    "react-test-renderer": "16.6.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
