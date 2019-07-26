@@ -55,7 +55,6 @@ class App extends Component {
 
   renderItem(item, itemSize, itemPaddingHorizontal) {
     //Single item of Grid
-    console.log("ITEM", item);
     return (
       <TouchableOpacity
         key={item.id}
@@ -77,7 +76,7 @@ class App extends Component {
   }
 
   render() {
-
+      
     return (
       <View style={styles.container}>
 
@@ -97,6 +96,8 @@ class App extends Component {
 
 const mS = state => ({
   user: state.Users.actualUser,
+  images: state.Users.images,
+
 
 });
 
