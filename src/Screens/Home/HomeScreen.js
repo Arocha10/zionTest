@@ -81,7 +81,7 @@ class App extends Component {
       <View style={styles.container}>
 
         <PhotoGrid
-          data={this.state.images? this.state.images :  this.state.images_test}
+          data={this.props.images? this.props.images : this.state.images? this.state.images :  this.state.images_test}
           itemsPerRow={3}
           //You can decide the item per row
           itemMargin={1}

@@ -33,22 +33,46 @@ class Sidebar extends Component {
     this.setState({ search });
   };
 
+  updateUser = search => {
+    const {users } = this.props;
+    console.log(search)
+    if(search){
+
+      unsplash.users.photos(search, 1, 20, "popular")
+      .then(json => {
+        let profile = JSON.parse(json._bodyInit);
+        console.log("profinle", profile);
+        let images = profile;
+        this.props.update({users: users, actualUser:search, images: images}),
+        this.setState({ search:"" });
+      })
+    .catch(err => {
+      console.log("ERROR", err)
+      Alert.alert("The user not exist or doesnt have any photo");
+    });
+    }
+
+  };
+
   addUser = search => {
     const {users } = this.props;
     console.log(search)
-    unsplash.users.photos(search, 1, 20, "popular")
-    .then(json => {
-      let profile = JSON.parse(json._bodyInit);
-      console.log("profinle", profile);
-      let images = profile;
-      users.push(this.state.search);
-      this.props.update({users: users, actualUser:search, images: images}),
-      this.setState({ search:"" });
-    })
-  .catch(err => {
-    console.log("ERROR", err)
-    Alert.alert("The user not exist or doesnt have any photo");
-  });
+    if(search){
+
+      unsplash.users.photos(search, 1, 20, "popular")
+      .then(json => {
+        let profile = JSON.parse(json._bodyInit);
+        console.log("profinle", profile);
+        let images = profile;
+        users.push(this.state.search);
+        this.props.update({users: users, actualUser:search, images: images}),
+        this.setState({ search:"" });
+      })
+    .catch(err => {
+      console.log("ERROR", err)
+      Alert.alert("The user not exist or doesnt have any photo");
+    });
+    }
 
   };
   
@@ -72,7 +96,7 @@ class Sidebar extends Component {
             dataArray={users}
             renderRow={item => {
               return (
-                <ListItem icon button onPress={() => this.props.update({actualUser: item})}>
+                <ListItem icon button onPress={() => this.addUser(search)}>
 
                   <Body>
                     <Text>{item}</Text>
