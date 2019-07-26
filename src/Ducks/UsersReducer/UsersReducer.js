@@ -17,7 +17,7 @@ export const clear = _ => ({
 
 const initialState = {
   actualUser: "",
-  users:{}
+  users:[],
 };
 
 const UsersReducer = (state = initialState, action) => {

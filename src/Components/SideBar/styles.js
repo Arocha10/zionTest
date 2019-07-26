@@ -34,5 +34,11 @@ export default StyleSheet.create({
     alignSelf: "stretch",
     justifyContent: "center",
     alignItems: "center"
+  },
+  notUsersContainer:{
+    paddingTop: 20,
+    paddingLeft:5,
+    justifyContent: "center",
+    alignItems: "baseline",
   }
 });

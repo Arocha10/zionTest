@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import Unsplash from 'unsplash-js/native';
+import { connect } from "react-redux";
+
 import { Platform, StyleSheet, Text, View, FlatList, Image, TouchableOpacity } from "react-native";
 import PhotoGrid from 'react-native-image-grid';
 
@@ -13,7 +15,7 @@ const unsplash = new Unsplash({
   applicationId: "aa2f3c3be8125f1fc86e3007153420c4e446c19b7b0c6d80a6257b281c9a0dc5",
   secret: "a5ab4ed2efdc772dca8d5636a26c0d897907df38cd92baa9067e57093d9596b5"
 });
-export default class App extends Component {
+class App extends Component {
 
   constructor() {
     super();
@@ -23,14 +25,13 @@ export default class App extends Component {
     };
   }
 
-
   componentWillMount() {
-    unsplash.users.profile("corneschi")
+    unsplash.users.photos("corneschi", 1, 10, "popular", false)
     .then(json => {
       let profile = JSON.parse(json._bodyInit);
-      console.log("Images", profile.photos, profile.photos[0], profile.photos[1]);
+      console.log(profile)
         this.setState({
-          images: profile.photos,
+          images: profile,
         });
       // Your code
     })
@@ -40,7 +41,7 @@ export default class App extends Component {
   });
   let items = Array.apply(null, Array(60)).map((v, i) => {
     //Using demo placeholder images but you can add your images here
-    return { id: i, urls : {small: 'http://placehold.it/200x200?text=' + (i +1)} };
+    return { id: i, links : {download: 'http://placehold.it/200x200?text=' + (i +1)} };
   });
   this.setState({ images_test: items });
 
@@ -55,7 +56,7 @@ export default class App extends Component {
 
   renderItem(item, itemSize, itemPaddingHorizontal) {
     //Single item of Grid
-    console.log("ITEM", item);
+    console.log("ITEM", item,item.links.download, itemSize );
     return (
       <TouchableOpacity
         key={item.id}
@@ -68,8 +69,9 @@ export default class App extends Component {
         }}>
         <Image
           resizeMode="cover"
+          resizeMethod="resize"
           style={{ flex: 1 }}
-          source={{ uri: item.urls.small }}
+          source={{ uri: item.links.download }}
         />
       </TouchableOpacity>
     );
@@ -97,6 +99,21 @@ export default class App extends Component {
     );
   }
 }
+
+const mS = state => ({
+  user: state.Users.actualUser,
+
+});
+
+const mD = {
+};
+
+export default connect(
+  mS,
+  mD
+)(App);
+
+
 
 const styles = StyleSheet.create({
   container: {

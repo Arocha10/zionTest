@@ -12,8 +12,8 @@ import {
   Button,
   Container
 } from "native-base";
-import Unsplash from 'unsplash-js/native';
 import { sideBarItems } from "../../Utils/Constants";
+import { update } from "../../Ducks/UsersReducer/UsersReducer";
 import { SearchBar } from 'react-native-elements';
 
 import styles from "./styles";
@@ -26,10 +26,17 @@ class Sidebar extends Component {
   updateSearch = search => {
     this.setState({ search });
   };
+
+  addUser = search => {
+    const {users } = this.props;
+    users.push(this.state.search);
+    this.props.update({users: users}),
+    this.setState({ search:"" });
+  };
   
   render() {
     const { search } = this.state;
-
+    const {users } = this.props;
     return (
       <Container>
         <Content>
@@ -41,35 +48,31 @@ class Sidebar extends Component {
               placeholder="Type Here..."
               onChangeText={this.updateSearch}
               value={search}
-              onEndEditing={() => console.log("ya edite")}
+              onEndEditing={() => this.addUser()}
             />
-          <List
-            dataArray={sideBarItems}
+          { users.length > 0 ?   <List
+            dataArray={users}
             renderRow={item => {
               return (
-                <ListItem icon button onPress={() => console.log("Hey")}>
+                <ListItem icon button onPress={() => this.props.update({actualUser: item})}>
                   <Left>
                     <Icon
                       active
                       type="MaterialCommunityIcons"
-                      name={item.icon}
+                      name={"person"}
                     />
                   </Left>
                   <Body>
-                    <Text>{item.name}</Text>
+                    <Text>{item}</Text>
                   </Body>
                 </ListItem>
               );
             }}
-          />
-          <Button
-            style={styles.logout_button}
-            onPress={() => {
-              console.log("hey");
-            }}
-          >
-            <Text>Logout</Text>
-          </Button>
+          /> : 
+          <View style={styles.notUsersContainer}>
+            <Text>{"Not users searched yet..."}</Text>
+          </View>
+          }
         </Content>
         <View style={styles.version_box}>
           <Text>VERSION</Text>
@@ -79,9 +82,16 @@ class Sidebar extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  users: state.Users.users,
+  user: state.Users.users.actualUser
 
-const mapDispatchToProps = {};
+});
+
+const mapDispatchToProps = {
+  update,
+
+};
 
 export default connect(
   mapStateToProps,
