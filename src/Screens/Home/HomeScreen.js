@@ -25,8 +25,6 @@ class App extends Component {
   }
 
   componentWillMount() {
-    console.log("USER", this.props.user)
-      console.log("hay usuario");
       unsplash.users.photos("corneschi", 1, 20, "popular")
       .then(json => {
         let profile = JSON.parse(json._bodyInit);
@@ -37,7 +35,7 @@ class App extends Component {
       })
     .catch(err => {
       console.log("ERROR", err)
-      Alert.alert("The user not exist or doesnt have any photo");
+      Alert.alert("Unexpected Error");
     });
 
       let items = Array.apply(null, Array(60)).map((v, i) => {
