@@ -12,6 +12,7 @@ import {
   Button,
   Container
 } from "native-base";
+import Unsplash from 'unsplash-js/native';
 import { sideBarItems } from "../../Utils/Constants";
 import { SearchBar } from 'react-native-elements';
 
@@ -40,6 +41,7 @@ class Sidebar extends Component {
               placeholder="Type Here..."
               onChangeText={this.updateSearch}
               value={search}
+              onEndEditing={() => console.log("ya edite")}
             />
           <List
             dataArray={sideBarItems}
