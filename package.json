@@ -20,6 +20,7 @@
     "react-native": "0.57.6",
     "react-native-elements": "^1.1.0",
     "react-native-gesture-handler": "^1.0.10",
+    "react-native-image-grid": "^1.0.0",
     "react-native-size-matters": "^0.1.4",
     "react-native-vector-icons": "^6.6.0",
     "react-navigation": "^3.0.4",
